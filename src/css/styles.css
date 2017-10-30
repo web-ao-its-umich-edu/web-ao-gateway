@@ -1,0 +1,45 @@
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+.jumbotron {
+  background: #fff
+}
+.jumbotron p.subtitle {
+  font-size: 150%;
+  color:#62A2DB;
+}
+
+.card_container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+.grey_card {
+  border-top:3px solid #FFCB05;
+  background:#eee;
+  padding:0 20px;
+  text-align: center;
+  height:250px
+}
+
+.footer1 {
+  padding:20px
+}
+.footer2 {
+  padding:20px;
+  background:#00274c
+}
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.flex-container div{
+  margin:20px;
+  padding:20px;
+  border:1px solid #000;
+  background: #ccc;
+  color:#000
+}
