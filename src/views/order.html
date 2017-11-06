@@ -1,136 +1,37 @@
 <div class="container-fluid" style="margin-top:80px">
-  <div class="container">
-    <!--Form-->
-    <form id="requestform">
-      <!--Site options-->
-      <fieldset class="siteoptions">
-        <h3>Choose An Option</h3>
-        <div class="radio">
-          <label>
-                      <input type="radio" name="siteoption">
-                      <h4>Simple Website</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="siteoption">
-                      <h4>Application</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-      </fieldset>
-
-      <!--Environment options-->
-      <fieldset class="envoptions">
-        <h3>Choose An Environment</h3>
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Drupal</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Google</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-      </fieldset>
-
-      <fieldset class="envoptions">
-        <h3>Choose An Environment</h3>
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Ruby</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Python</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Node.js</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Java</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Drupal</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-      </fieldset>
-
-      <!--X options-->
-      <fieldset class="xoptions">
-        <h3>Choose A ???</h3>
-        <div class="form-group">
-          <label for="url">URL</label>
-          <input type="text" class="form-control" id="url">
-        </div>
-
-        <div class="radio">
-          <h4>Database?</h4>
-          <label>
-                      <input type="radio" name="envoption">Yes
-                  </label>
-          <label>
-                      <input type="radio" name="envoption">No
-                  </label>
-        </div>
-
-        <div class="radio">
-          <h4>High availibilty?</h4>
-          <label>
-                      <input type="radio" name="envoption">Yes
-                  </label>
-          <label>
-                      <input type="radio" name="envoption">No
-                  </label>
-        </div>
-
-        <div class="radio">
-          <h4>Sensitive Data?</h4>
-          <label>
-                      <input type="radio" name="envoption">Yes
-                  </label>
-          <label>
-                      <input type="radio" name="envoption">No
-                  </label>
-        </div>
-      </fieldset>
-
-      <!--Shortcode options-->
-      <fieldset class="envoptions">
-        <h3>Enter A Shortcode</h3>
-        <div class="form-group">
-          <label for="code">Shortcode</label>
-          <input type="text" class="form-control" id="code">
-        </div>
-      </fieldset>
-    </form>
+  <div class="alert alert-info">
+    {{orderModel}}
   </div>
+
+
+  <div id="site" ng-show="!orderModel.site">
+    <input type="radio" ng-model="orderModel.site" value="site">Site
+    <input type="radio" ng-model="orderModel.site" value="app">App
+  </div>
+
+  <div id="app" ng-show="orderModel.site ==='app'">
+    <div id="env">
+      <input type="radio" ng-model="orderModel.env" value="drupal">Drupal
+      <input type="radio" ng-model="orderModel.env" value="java">Java
+      <input type="radio" ng-model="orderModel.env" value="python">Python
+    </div>
+    <div id="db" ng-show="orderModel.env">
+      <input type="radio" ng-model="orderModel.db" value="no">No
+      <input type="radio" ng-model="orderModel.db" value="yes">Yes
+    </div>
+  </div>
+
+  <div ng-show="orderModel.site ==='site' || (orderModel.site ==='app' && orderModel.env  && orderModel.db)">
+    <div id="itar">
+      Sensitive data?
+      <input type="radio" ng-model="orderModel.itar" value="no">No
+      <input type="radio" ng-model="orderModel.itar" value="yes">Yes
+    </div>
+    <div id="url">
+      url <input type="text" ng-model=orderModel.url>
+    </div>
+    <div id="shortcode">
+      shortcode <input type="text" ng-model=orderModel.shortcode>
+    </div>
+  </div>
+  </div
