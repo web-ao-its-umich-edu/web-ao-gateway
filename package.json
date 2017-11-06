@@ -1,0 +1,34 @@
+{
+  "name": "web-ao-gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsilver/web-ao-gateway.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gsilver/web-ao-gateway/issues"
+  },
+  "homepage": "https://github.com/gsilver/web-ao-gateway#readme",
+  "dependencies": {
+    "@material/auto-init": "^0.24.0",
+    "@material/base": "^0.24.0",
+    "@material/button": "^0.24.0",
+    "@material/card": "^0.24.0",
+    "@material/dialog": "^0.24.0",
+    "@material/elevation": "^0.1.13",
+    "@material/form-field": "^0.24.0",
+    "@material/layout-grid": "^0.24.0",
+    "@material/list": "^0.24.0",
+    "@material/menu": "^0.24.0",
+    "@material/ripple": "^0.24.0",
+    "@material/toolbar": "^0.24.0",
+    "@material/typography": "^0.3.0"
+  }
+}
