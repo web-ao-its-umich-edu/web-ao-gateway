@@ -15,14 +15,20 @@
   flex-flow: row wrap;
   justify-content: space-around;
 }
-.grey_card {
-  border-top:3px solid #FFCB05;
-  background:#eee;
+.card {
   padding:0 20px;
   text-align: center;
-  height:250px
+  height:270px;
+  margin-top:10px
+}
+.grey_card {
+  border-top:5px solid #FFCB05;
+  background:#f2f2f2;
 }
 
+.hanging-indent-body {
+  padding-left:33px
+}
 .footer1 {
   padding:20px
 }
@@ -42,4 +48,13 @@
   border:1px solid #000;
   background: #ccc;
   color:#000
+}
+.icon-holder {
+  margin:30px
+}
+.large-icon {
+  font-size: 65px
+}
+.grey-icon {
+  color:#ccc
 }
