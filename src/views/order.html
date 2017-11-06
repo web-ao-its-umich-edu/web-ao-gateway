@@ -1,4 +1,5 @@
 <div class="container-fluid" style="margin-top:80px">
+
   <div class="alert alert-info">
     {{orderModel}}
   </div>
@@ -21,7 +22,8 @@
     </div>
   </div>
 
-  <div ng-show="orderModel.site ==='site' || (orderModel.site ==='app' && orderModel.env  && orderModel.db)">
+  <div ng-show="orderModel.site ==='site' || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
+
     <div id="itar">
       Sensitive data?
       <input type="radio" ng-model="orderModel.itar" value="no">No
