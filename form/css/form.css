@@ -1,28 +1,86 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
 body
 {
     background-color: #f9f9f9 !important;
 }
+
+/* Request Form */
 #requestform
 {
     width: 50%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0;
     background-color: #fff;
     border: 1px solid gainsboro;
+    
+}
+#requestform h2
+{
+    margin-top: 7px;
+    font-weight: 300;
+    text-align: center;
 }
 #requestform h3
 {
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+    font-weight: 100;
+    font-size: 1.3em;
+    text-align: center;
 }
 #requestform h4
 {
     font-weight: 400;
     margin-top: -1px;
 }
-#requestform p
+
+/* Form Header */
+.form-header
 {
-    font-weight: 300;
-    color: #62A2DB;
-    margin-top: -1px;
+    padding: 10px;
+    background-color: #E4E4E4;
+    
 }
 
+/* Form Holder */
+.form-holder
+{
+    padding: 20px;
+   
+}
+
+/* Form Groups */
+.form-group
+{
+    margin-bottom: 40px !important;
+}
+/* Radio Groups */
+.radio p
+{
+    margin-top: -5px;
+    font-size: 0.8em;
+    font-weight: 200;
+    color: #95989A;
+}
+
+/* Buttons */
+.formbutton
+{
+    margin-left: 40%;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    background-color: #00274C;
+    border: 0;
+}
+
+/* Addition Info Page */
+.form-group-input p
+{
+    font-size: 0.8em;
+    
+}
