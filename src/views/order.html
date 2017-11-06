@@ -1,136 +1,86 @@
 <div class="container-fluid" style="margin-top:80px">
   <div class="container">
-    <!--Form-->
-    <form id="requestform">
-      <!--Site options-->
-      <fieldset class="siteoptions">
-        <h3>Choose An Option</h3>
-        <div class="radio">
-          <label>
-                      <input type="radio" name="siteoption">
-                      <h4>Simple Website</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
+     <!--Form-->
+        <form id="requestform">
+            <div class="form-header">
+                <h2>Request a Site/Application</h2>
+            </div>
+    
+            <div class="form-holder">
+                <fieldset class="page">
+                    <h3>CHOOSE A SITE OR APPLICATION</h3>
+                    <div class="radio form-group">
+                        <label>
+                            <input type="radio" name="siteoption"> 
+                            <h4>Simple Website</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                        </label>
+                    </div>
+                    <div class="radio form-group">
+                        <label>
+                            <input type="radio" name="siteoption"> 
+                            <h4>Application</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                        </label>
+                    </div>
+                    
+                    <button type="button" id="nextBtn" class="formbutton">NEXT</button>
+                </fieldset>
+                
+                <fieldset class="page additonalinfo">
+                    <h3>SOME MORE INFORMATION</h3>
+                    
+                    <div class="form-group form-group-input">
+                      <label for="url">URL</label>
+                      <input type="text" class="form-control" id="url">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                    </div>
 
-        <div class="radio">
-          <label>
-                      <input type="radio" name="siteoption">
-                      <h4>Application</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-      </fieldset>
+                     <div class="radio form-group">
+                        <h4>Database?</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                        <label>
+                            <input type="radio" name="envoption">Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="envoption">No
+                        </label>
+                    </div>
 
-      <!--Environment options-->
-      <fieldset class="envoptions">
-        <h3>Choose An Environment</h3>
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Drupal</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
+                    <div class="radio form-group">
+                        <h4>High availibilty?</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                        <label>
+                            <input type="radio" name="envoption">Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="envoption">No
+                        </label>
+                    </div>
 
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Google</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-      </fieldset>
+                    <div class="radio form-group">
+                        <h4>Sensitive Data?</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+                        <label>
+                            <input type="radio" name="envoption">Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="envoption">No
+                        </label>
+                    </div>
 
-      <fieldset class="envoptions">
-        <h3>Choose An Environment</h3>
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Ruby</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Python</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Node.js</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Java</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-
-        <div class="radio">
-          <label>
-                      <input type="radio" name="envoption">
-                      <h4>Drupal</h4>
-                      <p>Description</p>
-                  </label>
-        </div>
-      </fieldset>
-
-      <!--X options-->
-      <fieldset class="xoptions">
-        <h3>Choose A ???</h3>
-        <div class="form-group">
-          <label for="url">URL</label>
-          <input type="text" class="form-control" id="url">
-        </div>
-
-        <div class="radio">
-          <h4>Database?</h4>
-          <label>
-                      <input type="radio" name="envoption">Yes
-                  </label>
-          <label>
-                      <input type="radio" name="envoption">No
-                  </label>
-        </div>
-
-        <div class="radio">
-          <h4>High availibilty?</h4>
-          <label>
-                      <input type="radio" name="envoption">Yes
-                  </label>
-          <label>
-                      <input type="radio" name="envoption">No
-                  </label>
-        </div>
-
-        <div class="radio">
-          <h4>Sensitive Data?</h4>
-          <label>
-                      <input type="radio" name="envoption">Yes
-                  </label>
-          <label>
-                      <input type="radio" name="envoption">No
-                  </label>
-        </div>
-      </fieldset>
-
-      <!--Shortcode options-->
-      <fieldset class="envoptions">
-        <h3>Enter A Shortcode</h3>
-        <div class="form-group">
-          <label for="code">Shortcode</label>
-          <input type="text" class="form-control" id="code">
-        </div>
-      </fieldset>
-    </form>
+                </fieldset>
+                
+                <fieldset class="page additonalinfo">
+                    <h3>ENTER A SHORTCODE</h3>
+                    
+                    <div class="form-group form-group-input">
+                      <label for="url">Shortcode</label>
+                      <input type="text" class="form-control" id="url">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                    </div>
+                </fieldset>
+            </div>
+            
+        </form>
   </div>
