@@ -1,0 +1,42 @@
+/* FORM CSS */
+body
+{
+    margin: 0;
+    padding: 0;
+}
+
+.navbar
+{
+    margin-bottom: 0 !important; /*override a different way*/
+    padding-bottom: 10px;
+    background-color: #00274C;
+    
+}
+
+.sidebar
+{
+    
+    background-color: #fff;
+   
+}
+
+.console-main
+{
+    height:100vh;
+    background-color: #F5F6F8;  
+}
+.console-main h1
+{
+    width: 163px;
+    padding-bottom: 10px;
+    color: #62A2DB;
+    font-size: 1.1em;
+    font-weight: 400;
+    border-bottom: 2px solid #62A2DB;
+}
+
+.sites
+{
+    margin-top: 30px;
+}
+
