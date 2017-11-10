@@ -16,4 +16,13 @@ webGateway.controller('supportController', ['$rootScope', '$scope', '$filter', '
 
 webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$timeout', '$log', function($rootScope, $scope, $filter, $timeout, $log) {
   console.log('order');
+  $scope.orderModel = {
+    site: null,
+    env:null,
+    db:null,
+    url:null,
+    shortcode: null,
+    itar:null,
+    free:null
+  };
 }]);
