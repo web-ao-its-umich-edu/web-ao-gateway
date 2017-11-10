@@ -36,6 +36,24 @@
       border:0px solid #fff
     }
 
+    footer {
+      margin-top:20px;
+      background:#282c30;
+      padding:10px 5px;
+    }
+    p.footer-title {
+      color:#fff;
+      margin:5px
+    }
+    p.footer-body {
+      font-size: 12px;
+      margin:5px
+    }
+    p.footer-body a {
+      color:#78afd4
+    }
+
+
   </style>
 </head>
 
@@ -72,7 +90,38 @@
 
   <!-- container for all the views -->
   <ng-view></ng-view>
+  <footer>
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 hidden-md-down">
+        Logo
+      </div>
+      <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12">
+        <p class="footer-title">Services</p>
+        <p class="footer-body"><a href="">Service Overview</a></p>
+        <p class="footer-body"><a href="">SLA</a></p>
+      </div>
+      <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12">
+        <p class="footer-title">About</p>
+        <p class="footer-body"><a href="">About Web Platforms</a></p>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+        <p class="footer-title">Pricing</p>
+        <p class="footer-body"><a href="">Pricing information</a></p>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+        <p class="footer-title">Support</p>
+        <p class="footer-body"><a href="">Support model</a></p>
+        <p class="footer-body"><a href="">Contact us</a></p>
 
+      </div>
+
+
+    </div>
+
+
+    </div>
+
+  </footer>
   <!-- jQuery first, then Tether, then Bootstrap JS. -->
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

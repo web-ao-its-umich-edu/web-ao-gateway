@@ -22,6 +22,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     db:null,
     url:null,
     shortcode: null,
-    itar:null
+    itar:null,
+    free:null
   };
 }]);
