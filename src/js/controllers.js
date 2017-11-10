@@ -20,6 +20,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     site: null,
     env:null,
     db:null,
+    avail:null,
     url:null,
     shortcode: null,
     itar:null,
