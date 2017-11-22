@@ -179,6 +179,21 @@
             </div>
         </fieldset>
       </div>
-        
+      
+      <!-- Contact Information -->
+      <div id="contact" ng-show="orderModel.url != null && orderModel.avail != null && orderModel.itar != null && orderModel.shortcode != null">
+        <fieldset class="form-group">
+          <legend>Contact Information</legend>
+          
+          <div id="uniq">
+                <label for="uniq-input">Uniqname</label>
+                <input type="text" ng-model="orderModel.uniq" class="form-control" placeholder="Enter uniqname">
+            </div>
+          <div id="mcomm" style="margin-top:30px;">
+                <label for="mcomm-input">MCommunity Group</label>
+                <input type="text" ng-model="orderModel.mcomm" class="form-control" placeholder="Enter MCommunity Group">
+          </div>
+        </fieldset>
+      </div>
     </div>
 </div>
