@@ -1,43 +1,48 @@
 <div class="container-fluid" style="margin-top:80px">
     <div class="container">
-      <div class="alert alert-info">
-        {{orderModel}}
+      <a href="" style="position:fixed;right:0;top:60px;width:30px" ng-click="showDebug = !showDebug">&nbsp;</a>
+      <div ng-show="showDebug">
+        <div class="alert alert-info">
+          {{orderModel}}
+        </div>
+        <div class="alert alert-danger">
+          {{validation}}
+        </div>
       </div>
-
       <!--Site Options-->
       <div id="site">
         <fieldset class="form-group">
             <legend>Choose A Site Or An Application</legend>
-            
+
             <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" ng-model="orderModel.site" value="site" class="form-check-input" name="optionSite" checked>
+                <input type="radio" ng-model="orderModel.site" ng-click="resetOrder('site')" value="site" class="form-check-input" name="optionSite" checked>
                 Simple Website
               </label>
             </div>
-            
+
             <div class="form-check">
               <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.site" value="app" class="form-check-input" name="optionApp">
+                    <input type="radio" ng-model="orderModel.site" ng-click="resetOrder('app')"  value="app" class="form-check-input" name="optionApp">
                     Custom Application
               </label>
             </div>
         </fieldset>
       </div>
-     
-      <!--Site Environment Options-->   
+
+      <!--Site Environment Options-->
       <div id="simple" ng-show="orderModel.site ==='site'">
         <div id="env">
             <fieldset class="form-group">
               <legend>Choose An Environment</legend>
-              
+
               <div class="form-check">
                 <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="google" class="form-check-input">
                     Google Site
                 </label>
               </div>
-              
+
               <div class="form-check">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input">
@@ -47,55 +52,55 @@
           </fieldset>
         </div>
       </div>
-        
-      <!--Application Environment Options-->  
+
+      <!--Application Environment Options-->
       <div id="app" ng-show="orderModel.site ==='app'">
         <div id="env">
           <fieldset class="form-group">
               <legend>Choose An Environment</legend>
-              
+
               <div class="form-check">
                 <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input">
                     Drupal
                 </label>
               </div>
-              
+
               <div class="form-check">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="python2" class="form-check-input">
                     Python 2.x
                   </label>
               </div>
-              
+
               <div class="form-check">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="python3" class="form-check-input">
                     Python 3.x
                   </label>
               </div>
-              
+
               <div class="form-check">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="ruby" class="form-check-input">
                     Ruby
                   </label>
               </div>
-              
+
               <div class="form-check">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="java" class="form-check-input">
                     Java
                   </label>
               </div>
-              
+
               <div class="form-check">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="nodejs" class="form-check-input">
                     NodeJS
                   </label>
               </div>
-              
+
               <div class="form-check">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="php" class="form-check-input">
@@ -105,19 +110,19 @@
           </fieldset>
         </div>
       </div>
-      
+
       <!--Database Options-->
       <div id="db" ng-show="orderModel.site ==='app' && orderModel.env">
           <fieldset class="form-group">
               <legend>Database Options</legend>
-              
+
               <div class="form-check form-check-inline">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.db" value="yes" class="form-check-input">
                     Yes
                   </label>
               </div>
-               
+
               <div class="form-check form-check-inline">
                   <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.db" value="no" class="form-check-input">
@@ -125,19 +130,22 @@
                   </label>
               </div>
           </fieldset>
-      </div> 
-        
+      </div>
+
       <!--URL, Availibilty, Sensitive Data, Shortcode-->
       <div ng-show="(orderModel.site ==='site' && orderModel.env !== null) || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
         <fieldset class="form-group">
             <legend>Additional Information</legend>
-            
             <div id="url">
-              <label for="url-input">Choose a URL</label>
-              <input type="text" ng-model="orderModel.url" class="form-control" placeholder="Enter url">
-              <small id="urlHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
+                <label for="url-input">Choose a prefix</label><br>
+                <span style="color:#d9534f" ng-show="validation.url===false">{{validation.url_reason}}</span>
+                <div class="form-inline" ng-class="validation.url===false ? 'has-danger' : 'class-if-false'">
+                  <input type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter url">&nbsp; . &nbsp;
+                  <input type="text" disabled class="form-control" placeholder="web.umich.edu"> &nbsp;&nbsp;<span ng-show="orderModel.url"> https://{{orderModel.url}}.web.umich.edu </span>
+                </div>
+                <small id="urlHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
             </div>
-            
+
             <div id="avail" style="margin-top:30px;">
               <label for="avail-input">High availibility?</label>
               <div class="form-check">
@@ -153,11 +161,11 @@
                 </label>
               </div>
             </div>
-            
+
             <div id="itar" style="margin-top:30px;">
               <label for="itar-input">Does your site contain sensitive data?</label>
               <a href="https://www.safecomputing.umich.edu/dataguide/?q=home">Read more about the Umich Sensitive Data Guide</a>
-                
+
               <div class="form-check">
                 <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.itar" value="yes" class="form-check-input">
@@ -173,18 +181,36 @@
             </div>
 
             <div id="shortcode" style="margin-top:50px;">
-              <label for="shortcode-input">Enter a shortcode</label>
-              <input type="text" ng-model="orderModel.shortcode" class="form-control" placeholder="Enter shortcode">
+              <label for="shortcode-input">Enter a shortcode</label><br>
+              <span style="color:#d9534f" ng-show="validation.shortcode===false">{{validation.shortcode_reason}}</span>
+              <table ng-show="validation.shortcode_metadata" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>
+                      Field
+                    </th>
+                    <th>
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="(key, value) in validation.shortcode_metadata">
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <input type="text" ng-model="orderModel.shortcode" ng-blur="validateShortCode()" class="form-control" placeholder="Enter shortcode">
               <small id="shortcodeHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
             </div>
         </fieldset>
       </div>
-      
       <!-- Contact Information -->
       <div id="contact" ng-show="orderModel.url != null && orderModel.avail != null && orderModel.itar != null && orderModel.shortcode != null">
         <fieldset class="form-group">
           <legend>Contact Information</legend>
-          
+
           <div id="uniq">
                 <label for="uniq-input">Uniqname</label>
                 <input type="text" ng-model="orderModel.uniq" class="form-control" placeholder="Enter uniqname">
