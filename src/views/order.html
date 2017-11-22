@@ -4,11 +4,6 @@
         {{orderModel}}
       </div>
 
-      <!-- this displays the site type choice when set -->
-      <!--<div id="siteDisplay" ng-show="orderModel.site">
-        {{orderModel.site}}
-      </div>-->
-
       <!--Site Options-->
       <div id="site">
         <fieldset class="form-group">
@@ -29,11 +24,6 @@
             </div>
         </fieldset>
       </div>
-
-      <!-- this sets the app choices if set -->
-      <!--<div id="appDisplay" ng-show="orderModel.env  !==null && orderModel.db !==null">
-        Environment: {{orderModel.env}} Database: {{orderModel.db}}
-      </div>-->
         
       <!--Application Environment Options-->  
       <div id="app" ng-show="orderModel.site ==='app'">
@@ -117,18 +107,12 @@
         
       <!--URL, Availibilty, Sensitive Data, Shortcode-->
       <div ng-show="orderModel.site ==='site' || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
-        <!--<div ng-show="orderModel.itar !==null">
-          Sensitive data : {{orderModel.itar}}
-        </div>-->
         <fieldset class="form-group">
             <legend>Additional Information</legend>
             
             <div id="url">
-              <!--<div ng-show="orderModel.url !==null">
-                URL : {{orderModel.url}}
-              </div>-->
               <label for="url-input">Choose a URL</label>
-              <input type="url" ng-model=orderModel.url class="form-control" placeholder="Enter url">
+              <input type="text" ng-model="orderModel.url" class="form-control" placeholder="Enter url">
               <small id="urlHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
             </div>
             
@@ -165,14 +149,10 @@
                 </label>
               </div>
             </div>
-            
-            <!--<div ng-show="orderModel.shortcode !==null">
-              URL : {{orderModel.shortcode}}
-            </div>-->
-            
+    
             <div id="shortcode" style="margin-top:50px;">
               <label for="shortcode-input">Enter a shortcode</label>
-              <input type="text" ng-model=orderModel.shortcode class="form-control" placeholder="Enter shortcode">
+              <input type="text" ng-model="orderModel.shortcode" class="form-control" placeholder="Enter shortcode">
               <small id="shortcodeHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
             </div>
         </fieldset>
