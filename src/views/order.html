@@ -19,10 +19,33 @@
             <div class="form-check">
               <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.site" value="app" class="form-check-input" name="optionApp">
-                    Application
+                    Custom Application
               </label>
             </div>
         </fieldset>
+      </div>
+     
+      <!--Site Environment Options-->   
+      <div id="simple" ng-show="orderModel.site ==='site'">
+        <div id="env">
+            <fieldset class="form-group">
+              <legend>Choose An Environment</legend>
+              
+              <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" ng-model="orderModel.env" value="google" class="form-check-input">
+                    Google Site
+                </label>
+              </div>
+              
+              <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input">
+                    Drupal
+                  </label>
+              </div>
+          </fieldset>
+        </div>
       </div>
         
       <!--Application Environment Options-->  
@@ -84,7 +107,7 @@
       </div>
       
       <!--Database Options-->
-      <div id="db" ng-show="orderModel.env">
+      <div id="db" ng-show="orderModel.site ==='app' && orderModel.env">
           <fieldset class="form-group">
               <legend>Database Options</legend>
               
@@ -104,9 +127,8 @@
           </fieldset>
       </div> 
         
-        
       <!--URL, Availibilty, Sensitive Data, Shortcode-->
-      <div ng-show="orderModel.site ==='site' || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
+      <div ng-show="(orderModel.site ==='site' && orderModel.env !== null) || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
         <fieldset class="form-group">
             <legend>Additional Information</legend>
             
@@ -149,7 +171,7 @@
                 </label>
               </div>
             </div>
-            
+
             <div id="shortcode" style="margin-top:50px;">
               <label for="shortcode-input">Enter a shortcode</label>
               <input type="text" ng-model="orderModel.shortcode" class="form-control" placeholder="Enter shortcode">
