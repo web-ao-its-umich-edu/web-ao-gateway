@@ -38,7 +38,9 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       url:null,
       shortcode: null,
       itar:null,
-      free:null
+      free:null,
+      course:null,
+      term:null
     };
   };
   $scope.validateUrl = function(){

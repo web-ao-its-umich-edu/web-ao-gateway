@@ -110,9 +110,31 @@
           </fieldset>
         </div>
       </div>
+    
+      <!--Free Usage-->
+      <div id="free" ng-show="orderModel.site != null && orderModel.env != null && orderModel.env != 'google'" style="margin-top:30px;">
+          <fieldset class="form-group">
+            <legend>Academic Use</legend>
+            <p>Web Platforms is free for use within official University of Michigan courses. Instances will be deleted six weeks after the end of the semester in which they are used.</p>
+            
+            <label for="free-input">Will your site/application be used to support a registered University course?</label>
+             <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" ng-model="orderModel.free" class="form-check-input">
+                    Yes
+                </label>
+              </div>
+              <div id="course" ng-show="orderModel.free">
+                <input type="text" ng-model="orderModel.course" class="form-control" placeholder="Enter course name" style="width:30%;">
+              </div>
+              <div id="term" ng-show="orderModel.free">
+                <input type="text" ng-model="orderModel.term" class="form-control" placeholder="Enter term" style="width:30%;">
+              </div>
+          </fieldset>
+      </div>
 
       <!--Database Options-->
-      <div id="db" ng-show="orderModel.site ==='app' && orderModel.env">
+      <div id="db" ng-show="orderModel.site ==='app' && orderModel.env && orderModel.term">
           <fieldset class="form-group">
               <legend>Database Options</legend>
 
@@ -133,31 +155,25 @@
       </div>
 
       <!--URL, Availibilty, Sensitive Data, Shortcode-->
-      <div ng-show="(orderModel.site ==='site' && orderModel.env !== null) || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
+      <div ng-show="(orderModel.site ==='site' && orderModel.env !== null && orderModel.term) || (orderModel.site ==='site' && orderModel.env === 'google') || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
         <fieldset class="form-group">
             <legend>Additional Information</legend>
             <div id="url">
-                <label for="url-input">Choose a prefix</label><br>
+                <label for="url-input">Choose a URL</label><br>
                 <span style="color:#d9534f" ng-show="validation.url===false">{{validation.url_reason}}</span>
                 <div class="form-inline" ng-class="validation.url===false ? 'has-danger' : 'class-if-false'">
-                  <input type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter url">&nbsp; . &nbsp;
+                  <input type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter prefix">&nbsp; . &nbsp;
                   <input type="text" disabled class="form-control" placeholder="web.umich.edu"> &nbsp;&nbsp;<span ng-show="orderModel.url"> https://{{orderModel.url}}.web.umich.edu </span>
                 </div>
-                <small id="urlHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
+                <small id="urlHelp" class="form-text text-muted">Only characters A-Z and 0-9</small>
             </div>
 
             <div id="avail" style="margin-top:30px;">
               <label for="avail-input">High availibility?</label>
               <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.avail" value="yes" class="form-check-input">
+                    <input type="checkbox" ng-model="orderModel.avail" class="form-check-input">
                     Yes
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.avail" value="no" class="form-check-input">
-                    No
                 </label>
               </div>
             </div>
@@ -180,9 +196,36 @@
               </div>
             </div>
 
-            <div id="shortcode" style="margin-top:50px;">
-              <label for="shortcode-input">Enter a shortcode</label><br>
+            
+        </fieldset>
+      </div>
+        
+      <!-- Contact Information -->
+      <div id="contact" ng-show="orderModel.url != null && orderModel.avail != null && orderModel.itar != null">
+        <fieldset class="form-group">
+          <legend>Contact Information</legend>
+
+          <div id="uniq">
+                <label for="uniq-input">Uniqname</label>
+                <input type="text" ng-model="orderModel.uniq" class="form-control" placeholder="Enter uniqname">
+          </div>
+          <div id="mcomm" style="margin-top:30px;">
+                <label for="mcomm-input">MCommunity Group</label>
+                <input type="text" ng-model="orderModel.mcomm" class="form-control" placeholder="Enter MCommunity Group">
+          </div>
+        </fieldset>
+      </div>
+        
+      <div id="shortcode" ng-show="orderModel.uniq != null && orderModel.mcomm != null">
+        <fieldset class="form-group">
+            <legend>Shortcode</legend>
+            
+            <label for="shortcode-input">Enter a shortcode</label><br>
               <span style="color:#d9534f" ng-show="validation.shortcode===false">{{validation.shortcode_reason}}</span>
+              
+              <input type="text" ng-model="orderModel.shortcode" ng-blur="validateShortCode()" class="form-control" placeholder="Enter shortcode">
+              <small id="shortcodeHelp" class="form-text text-muted">Only numeric characters</small>
+            
               <table ng-show="validation.shortcode_metadata" class="table table-striped">
                 <thead>
                   <tr>
@@ -201,25 +244,8 @@
                   </tr>
                 </tbody>
               </table>
-              <input type="text" ng-model="orderModel.shortcode" ng-blur="validateShortCode()" class="form-control" placeholder="Enter shortcode">
-              <small id="shortcodeHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
-            </div>
         </fieldset>
       </div>
-      <!-- Contact Information -->
-      <div id="contact" ng-show="orderModel.url != null && orderModel.avail != null && orderModel.itar != null && orderModel.shortcode != null">
-        <fieldset class="form-group">
-          <legend>Contact Information</legend>
-
-          <div id="uniq">
-                <label for="uniq-input">Uniqname</label>
-                <input type="text" ng-model="orderModel.uniq" class="form-control" placeholder="Enter uniqname">
-            </div>
-          <div id="mcomm" style="margin-top:30px;">
-                <label for="mcomm-input">MCommunity Group</label>
-                <input type="text" ng-model="orderModel.mcomm" class="form-control" placeholder="Enter MCommunity Group">
-          </div>
-        </fieldset>
-      </div>
+        
     </div>
 </div>
