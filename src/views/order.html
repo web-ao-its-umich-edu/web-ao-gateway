@@ -134,7 +134,7 @@
       </div>
 
       <!--Database Options-->
-      <div id="db" ng-show="orderModel.site ==='app' && orderModel.env && orderModel.term">
+      <div id="db" ng-show="orderModel.site ==='app' && orderModel.env != null">
           <fieldset class="form-group">
               <legend>Database Options</legend>
 
@@ -155,7 +155,7 @@
       </div>
 
       <!--URL, Availibilty, Sensitive Data, Shortcode-->
-      <div ng-show="(orderModel.site ==='site' && orderModel.env !== null && orderModel.term) || (orderModel.site ==='site' && orderModel.env === 'google') || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
+      <div ng-show="(orderModel.site ==='site' && orderModel.env !== null) || (orderModel.site ==='site' && orderModel.env === 'google') || (orderModel.site ==='app' && orderModel.env !== null)">
         <fieldset class="form-group">
             <legend>Additional Information</legend>
             <div id="url">
@@ -216,7 +216,7 @@
         </fieldset>
       </div>
         
-      <div id="shortcode" ng-show="orderModel.uniq != null && orderModel.mcomm != null">
+      <div id="shortcode" ng-show="(orderModel.env !== 'google' && !orderModel.free) && (orderModel.uniq != null && orderModel.mcomm != null)">
         <fieldset class="form-group">
             <legend>Shortcode</legend>
             
