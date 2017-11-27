@@ -15,6 +15,7 @@ webGateway.controller('supportController', ['$rootScope', '$scope', '$filter', '
 }]);
 
 webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$timeout', '$log', function($rootScope, $scope, $filter, $timeout, $log) {
+  //setting up some initial values
   $scope.failedValidation ={};
   $scope.validationModel = {
     "url": null,
@@ -34,6 +35,16 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     mcomm: null,
     free: null
   };
+
+  //reset validation after any changes to orderModel
+  $scope.$watch('orderModel', function () {
+      $scope.failedValidation = {};
+      if($scope.orderModel.site !==null  && $scope.orderModel.env  !==null && $scope.orderModel.url  !==null && $scope.orderModel.avail  !==null && $scope.orderModel.itar !==null && $scope.orderModel.uniq  !==null && $scope.orderModel.mcomm  !==null){
+        $scope.orderComplete = true;
+      }
+  }, true);
+
+  //reset all values of orderModel (triggered when switching between app and site)
   $scope.resetOrder = function(val) {
     for (var key in $scope.orderModel ) {
       $scope.orderModel[key] = null;
@@ -42,12 +53,18 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       $scope.validationModel[key] = null;
     }
   };
+
+  //validate URL prefix, triggered by blur on input
   $scope.validateUrl = function() {
+    //is there a value?
     if ($scope.orderModel.url) {
+      //is it alphanum?
       if (/[^a-zA-Z0-9]/.test($scope.orderModel.url)) {
         $scope.validationModel.url = false;
         $scope.validationModel.url_reason = 'Only alphanumeric please.';
       } else {
+        //is is taken? Right now this is bogus, in future we will
+        // get this information by some http request from somewhere
         if ($scope.orderModel.url.includes('taken')) {
           $scope.validationModel.url = false;
           $scope.validationModel.url_reason = 'Prefix has already been taken.';
@@ -56,25 +73,33 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
         }
       }
     } else {
+      // there was no value in input - prompt
       $scope.validationModel.url = false;
       $scope.validationModel.url_reason = 'Please supply a prefix.';
     }
   };
   $scope.validateShortCode = function() {
-
     // an http request via ESB will return metadata that we display, we
     // have no way to validate that the current user has permission to use the shortcode
     // the metadata is there for self-validation
+
+    //is there a value?
     if ($scope.orderModel.shortcode) {
+      //is it numeric? TODO: what are shortcodes really like?
       if (/[^0-9]/.test($scope.orderModel.shortcode)) {
         $scope.validationModel.shortcode_metadata = null;
         $scope.validationModel.shortcode = false;
         $scope.validationModel.shortcode_reason = 'Only numeric please.';
       } else {
+        // TODO: in future we will use the shotcode to query the ESB, which
+        // will return metadata about the shortcode or an error message
+        // here we are mimicking the later condition by checking for a 0 in
+        // the input
         if ($scope.orderModel.shortcode.includes('0')) {
           $scope.validationModel.shortcode = false;
           $scope.validationModel.shortcode_reason = 'Shortcode does not exist.';
         } else {
+          // shortcode is real, servive returned metadata, display it
           $scope.validationModel.shortcode_metadata = {
             'Shortcode': '185817 - ITS Teach & Learn - Gen Exp (11088)',
             'Shortcode Status': 'Open',
@@ -88,17 +113,18 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
         }
       }
     } else {
+      // input is blank
       $scope.validationModel.shortcode = false;
       $scope.validationModel.shortcode_reason = 'Please supply a shortcode.';
       $scope.validationModel.shortcode_metadata = null;
     }
   };
+
+  // final validation - triggered by Preview Request button
+  // works by adding key/vals to the $scope.failedValidation object
   $scope.validateAndPreview = function(){
     $scope.failedValidation = {};
-    // validate common object key/values
-    //$scope.failedValidation = false;
     if(!$scope.orderModel.site){
-      //$scope.failedValidation = true;
       $scope.failedValidation.site = true;
     }
     if(!$scope.orderModel.env){
@@ -119,15 +145,18 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     if(!$scope.orderModel.mcomm){
       $scope.failedValidation.mcomm = true;
     }
-
+    // only bother to validate shortcode if the orderModel requires it
     if($scope.orderModel.env !=='google' || !$scope.orderModel.free){
       if(!$scope.orderModel.shortcode){
         $scope.failedValidation.shortcode = true;
       }
     }
+    // if $scope.failedValidation is an empty object
+    // show modal with request preview
     if(angular.equals($scope.failedValidation, {})){
       $('#requestPreview').modal('toggle');
     } else {
+      // set a global that will display the Oops message
       $scope.failedValidationGlobal = true;
     }
 
