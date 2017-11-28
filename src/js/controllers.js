@@ -16,7 +16,7 @@ webGateway.controller('supportController', ['$rootScope', '$scope', '$filter', '
 
 webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$timeout', '$log', function($rootScope, $scope, $filter, $timeout, $log) {
   //setting up some initial values
-  $scope.failedValidation ={};
+  $scope.failedValidation = {};
   $scope.validationModel = {
     "url": null,
     "shortcode_metadata": null,
@@ -37,19 +37,19 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
   };
 
   //reset validation after any changes to orderModel
-  $scope.$watch('orderModel', function () {
-      $scope.failedValidation = {};
-      if($scope.orderModel.site !==null  && $scope.orderModel.env  !==null && $scope.orderModel.url  !==null && $scope.orderModel.avail  !==null && $scope.orderModel.itar !==null && $scope.orderModel.uniq  !==null && $scope.orderModel.mcomm  !==null){
-        $scope.orderComplete = true;
-      }
+  $scope.$watch('orderModel', function() {
+    $scope.failedValidation = {};
+    if ($scope.orderModel.site !== null && $scope.orderModel.env !== null && $scope.orderModel.url !== null && $scope.orderModel.avail !== null && $scope.orderModel.itar !== null && $scope.orderModel.uniq !== null && $scope.orderModel.mcomm !== null) {
+      $scope.orderComplete = true;
+    }
   }, true);
 
   //reset all values of orderModel (triggered when switching between app and site)
   $scope.resetOrder = function(val) {
-    for (var key in $scope.orderModel ) {
+    for (var key in $scope.orderModel) {
       $scope.orderModel[key] = null;
     }
-    for (var key in $scope.validationModel ) {
+    for (var key in $scope.validationModel) {
       $scope.validationModel[key] = null;
     }
   };
@@ -82,6 +82,28 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     // an http request via ESB will return metadata that we display, we
     // have no way to validate that the current user has permission to use the shortcode
     // the metadata is there for self-validation
+
+    //a successfull request will return the following
+x
+    var shortcodeResponse = {
+      "ShortCodes": {
+        "ShortCode": {
+          "shortCode": "185817",
+          "shortCodeDescription": "ITS Teach & Learn - Gen Exp (11088)",
+          "shortCodeStatus": "O",
+          "ShortCodeStatusDescription": "Open",
+          "fundCode": "10000",
+          "deptID": "481094",
+          "programCode": "11088",
+          "class": "66000",
+          "projectGrant": "",
+          "class2": ""
+        }
+      }
+    };
+    //a shortcode that does not exist will return a 404 Status
+    //and the parsimonious payload of
+    //{"ShortCodes":""} 
 
     //is there a value?
     if ($scope.orderModel.shortcode) {
@@ -122,38 +144,38 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
 
   // final validation - triggered by Preview Request button
   // works by adding key/vals to the $scope.failedValidation object
-  $scope.validateAndPreview = function(){
+  $scope.validateAndPreview = function() {
     $scope.failedValidation = {};
-    if(!$scope.orderModel.site){
+    if (!$scope.orderModel.site) {
       $scope.failedValidation.site = true;
     }
-    if(!$scope.orderModel.env){
+    if (!$scope.orderModel.env) {
       $scope.failedValidation.env = true;
     }
-    if(!$scope.orderModel.url){
+    if (!$scope.orderModel.url) {
       $scope.failedValidation.url = true;
     }
-    if(!$scope.orderModel.avail){
+    if (!$scope.orderModel.avail) {
       $scope.failedValidation.avail = true;
     }
-    if(!$scope.orderModel.itar){
+    if (!$scope.orderModel.itar) {
       $scope.failedValidation.itar = true;
     }
-    if(!$scope.orderModel.uniq){
+    if (!$scope.orderModel.uniq) {
       $scope.failedValidation.uniq = true;
     }
-    if(!$scope.orderModel.mcomm){
+    if (!$scope.orderModel.mcomm) {
       $scope.failedValidation.mcomm = true;
     }
     // only bother to validate shortcode if the orderModel requires it
-    if($scope.orderModel.env !=='google' || !$scope.orderModel.free){
-      if(!$scope.orderModel.shortcode){
+    if ($scope.orderModel.env !== 'google' || !$scope.orderModel.free) {
+      if (!$scope.orderModel.shortcode) {
         $scope.failedValidation.shortcode = true;
       }
     }
     // if $scope.failedValidation is an empty object
     // show modal with request preview
-    if(angular.equals($scope.failedValidation, {})){
+    if (angular.equals($scope.failedValidation, {})) {
       $('#requestPreview').modal('toggle');
     } else {
       // set a global that will display the Oops message
