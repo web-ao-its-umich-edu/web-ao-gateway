@@ -53,7 +53,6 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       $scope.validationModel[key] = null;
     }
   };
-
   //validate URL prefix, triggered by blur on input
   $scope.validateUrl = function() {
     //is there a value?
@@ -84,7 +83,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     // the metadata is there for self-validation
 
     //a successfull request will return the following
-x
+
     var shortcodeResponse = {
       "ShortCodes": {
         "ShortCode": {
@@ -103,7 +102,7 @@ x
     };
     //a shortcode that does not exist will return a 404 Status
     //and the parsimonious payload of
-    //{"ShortCodes":""} 
+    //{"ShortCodes":""}
 
     //is there a value?
     if ($scope.orderModel.shortcode) {
