@@ -24,7 +24,6 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     "shortcode_reason": null
   };
   $scope.orderModel = {
-    site: null,
     env: null,
     db: null,
     url: null,
@@ -33,15 +32,31 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     itar: null,
     uniq: null,
     mcomm: null,
-    free: null
+    free:null,
+    course:null,
+    term:null
   };
 
   //reset validation after any changes to orderModel
   $scope.$watch('orderModel', function() {
     $scope.failedValidation = {};
-    if ($scope.orderModel.site !== null && $scope.orderModel.env !== null && $scope.orderModel.url !== null && $scope.orderModel.avail !== null && $scope.orderModel.itar !== null && $scope.orderModel.uniq !== null && $scope.orderModel.mcomm !== null) {
-      $scope.orderComplete = true;
-    }
+    if (
+       $scope.orderModel.env !== null &&
+       $scope.orderModel.url !== null  &&
+       $scope.orderModel.uniq !== null &&
+       $scope.orderModel.mcomm !== null &&
+       (
+         (
+           $scope.orderModel.free !== null &&
+           $scope.orderModel.course !==null &&
+           $scope.orderModel.term !==null
+         ) ||
+         $scope.orderModel.free === null && $scope.orderModel.shortcode !==null
+       )
+      )
+      {
+        $scope.orderComplete = true;
+      }
   }, true);
 
   //reset all values of orderModel (triggered when switching between app and site)
@@ -52,6 +67,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     for (var key in $scope.validationModel) {
       $scope.validationModel[key] = null;
     }
+    $scope.orderComplete = false
   };
   //validate URL prefix, triggered by blur on input
   $scope.validateUrl = function() {
@@ -145,20 +161,11 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
   // works by adding key/vals to the $scope.failedValidation object
   $scope.validateAndPreview = function() {
     $scope.failedValidation = {};
-    if (!$scope.orderModel.site) {
-      $scope.failedValidation.site = true;
-    }
     if (!$scope.orderModel.env) {
       $scope.failedValidation.env = true;
     }
     if (!$scope.orderModel.url) {
       $scope.failedValidation.url = true;
-    }
-    if (!$scope.orderModel.avail) {
-      $scope.failedValidation.avail = true;
-    }
-    if (!$scope.orderModel.itar) {
-      $scope.failedValidation.itar = true;
     }
     if (!$scope.orderModel.uniq) {
       $scope.failedValidation.uniq = true;
@@ -167,11 +174,22 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       $scope.failedValidation.mcomm = true;
     }
     // only bother to validate shortcode if the orderModel requires it
-    if ($scope.orderModel.env !== 'google' || !$scope.orderModel.free) {
+    if (!$scope.orderModel.free) {
       if (!$scope.orderModel.shortcode) {
         $scope.failedValidation.shortcode = true;
       }
     }
+    if ($scope.orderModel.free) {
+      if (!$scope.orderModel.course) {
+        $scope.failedValidation.course = true;
+      }
+      if (!$scope.orderModel.term) {
+        $scope.failedValidation.term = true;
+      }
+
+    }
+
+
     // if $scope.failedValidation is an empty object
     // show modal with request preview
     if (angular.equals($scope.failedValidation, {})) {

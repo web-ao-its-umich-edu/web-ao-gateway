@@ -1,8 +1,8 @@
 <div class="container-fluid" style="margin-top:80px">
   <div class="container">
     <a href="" style="position:fixed;right:0;top:60px;width:30px" ng-click="showDebug = !showDebug">&nbsp;</a>
-    <!-- <div ng-show="showDebug"> -->
-    <div>
+    <!-- <div> -->
+    <div  ng-show="showDebug">
       orderModel
       <div class="alert alert-info">
         {{orderModel}}
@@ -13,59 +13,16 @@
       </div>
       failedValidation
       <div class="alert alert-info">
-        {{failedValidation}}
+        {{failedValidation}} <br>
+        order complete: {{orderComplete}}
       </div>
     </div>
-    <!--Site Options-->
-    <div id="site">
-      <fieldset class="form-group" ng-class="failedValidation.site ? 'has-danger' : 'class-if-false'">
-        <legend>Choose A Site Or An Application</legend>
-
-        <div class="form-check">
-          <label class="form-check-label">
-                <input type="radio" ng-model="orderModel.site" ng-click="resetOrder('site')" value="site" class="form-check-input" name="optionSite" checked>
-                Simple Website
-              </label>
-        </div>
-
-        <div class="form-check">
-          <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.site" ng-click="resetOrder('app')"  value="app" class="form-check-input" name="optionApp">
-                    Custom Application
-              </label>
-        </div>
-      </fieldset>
-    </div>
-
-    <!--Site Environment Options-->
-    <div id="simple" ng-show="orderModel.site ==='site'">
-      <div id="env" ng-class="failedValidation.env ? 'has-danger' : 'class-if-false'">
-        <fieldset class="form-group">
-          <legend>Choose An Environment</legend>
-
-          <div class="form-check">
-            <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="google" class="form-check-input">
-                    Google Site
-                </label>
-          </div>
-
-          <div class="form-check">
-            <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input">
-                    Drupal
-                  </label>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-
     <!--Application Environment Options-->
-    <div id="app" ng-show="orderModel.site ==='app'">
+    <div id="app">
       <div id="env" ng-class="failedValidation.env ? 'has-danger' : 'class-if-false'">
         <fieldset class="form-group">
           <legend>Choose An Environment</legend>
-
+          <p>Choose an enviroment from the selection below. If all you need is a simple website you might want to take a look at <a href="https://sites.google.com">Google Sites.</a></p>
           <div class="form-check">
             <label class="form-check-label">
                     <input type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input">
@@ -116,55 +73,36 @@
           </div>
         </fieldset>
       </div>
-    </div>
-
-    <!--Database Options-->
-    <div id="db" ng-show="orderModel.site ==='app' && orderModel.env">
-      <fieldset class="form-group">
-        <legend>Database Options</legend>
-
+      <!--Database Options-->
+      <div id="db">
         <div class="form-check form-check-inline">
           <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.db" value="yes" class="form-check-input">
-                    Yes
-                  </label>
-        </div>
+            <input type="checkbox" ng-model="orderModel.db" class="form-check-input">
+              Add a database to this environment.
+          </label>
+      </div>
 
-        <div class="form-check form-check-inline">
-          <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.db" value="no" class="form-check-input">
-                    No
-                  </label>
-        </div>
-      </fieldset>
     </div>
 
-    <!--URL, Availibilty, Sensitive Data, Shortcode-->
-    <div ng-show="(orderModel.site ==='site' && orderModel.env !== null) || (orderModel.site ==='app' && orderModel.env !== null  && orderModel.db !==null)">
+    <!--URL, Availibilty, Sensitive Data, free or not -->
+    <div ng-show="orderModel.env">
       <fieldset class="form-group">
         <legend>Additional Information</legend>
         <div id="url" ng-class="failedValidation.url ? 'has-danger' : 'class-if-false'">
-          <label for="url-input">Choose a prefix</label><br>
-          <span style="color:#d9534f" ng-show="validationModel.url===false">{{validationModel.url_reason}}</span>
+          <label for="url-input">Choose a prefix for your site's address, letters and numbers only.</label>
+          <div style="color:#d9534f" ng-show="validationModel.url===false">{{validationModel.url_reason}}</div>
           <div class="form-inline" ng-class="validationModel.url===false ? 'has-danger' : 'class-if-false'">
             <input type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter url">&nbsp; . &nbsp;
             <input type="text" disabled class="form-control" placeholder="web.umich.edu"> &nbsp;&nbsp;<span ng-show="orderModel.url"> https://{{orderModel.url}}.web.umich.edu </span>
           </div>
-          <small id="urlHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
         </div>
 
         <div id="avail" style="margin-top:30px;" ng-class="failedValidation.avail ? 'has-danger' : 'class-if-false'">
-          <label for="avail-input">High availibility?</label>
           <div class="form-check">
+            <p>Your environment can be set to scale with demand so that it will be highly available </p>
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.avail" value="yes" class="form-check-input">
-                    Yes
-                </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.avail" value="no" class="form-check-input">
-                    No
+                    <input type="checkbox" ng-model="orderModel.avail" class="form-check-input">
+                    I want my site/app to be highly available.
                 </label>
           </div>
         </div>
@@ -175,46 +113,50 @@
 
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.itar" value="yes" class="form-check-input">
+                    <input type="checkbox" ng-model="orderModel.itar" class="form-check-input">
                     Yes. My Site Will Host Sensitive Data
                 </label>
           </div>
-          <div class="form-check">
-            <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.itar" value="no" class="form-check-input">
-                    No. My Site Will Not Host Sensitive Data
-                </label>
-          </div>
+        </div>
+        <!--Free Usage-->
+        <div id="free" ng-show="orderModel.env !== null && orderModel.shortcode ===null" style="margin-top:30px;">
+          <fieldset class="form-group">
+            <legend>Academic Use</legend>
+            <p>Web Platforms is free for use within official University of Michigan courses. Instances will be deleted six weeks after the end of the semester in which they are used.</p>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" ng-model="orderModel.free" class="form-check-input">
+                  My site/application be used to support a registered University course
+              </label>
+            </div>
+            <div id="course" ng-show="orderModel.free" ng-class="failedValidation.course ? 'has-danger' : 'class-if-false'">
+              <label for="course">Course</label>
+              <input type="text" id="course" ng-model="orderModel.course" class="form-control" placeholder="Enter course name" style="width:30%;">
+            </div>
+            <div id="term" ng-show="orderModel.free" ng-class="failedValidation.term ? 'has-danger' : 'class-if-false'">
+              <label for="term">Term</label>
+              <input type="text" id="term" ng-init="false" ng-model="orderModel.term" class="form-control" placeholder="Enter term" style="width:30%;">
+            </div>
+          </fieldset>
         </div>
 
-        <div id="shortcode" style="margin-top:50px;" ng-class="failedValidation.shortcode ? 'has-danger' : 'class-if-false'">
-          <label for="shortcode-input">Enter a shortcode</label><br>
+        <div id="shortcode" ng-hide="orderModel.free" style="margin-top:50px;" ng-class="failedValidation.shortcode ? 'has-danger' : 'class-if-false'">
+          <label for="shortcode-input">Enter a shortcode if the site/app will not be for academic use.</label>
+          <span ng-show="validationModel.shortcode_metadata">
+            Shortcode looked up.
+            <a href="" data-toggle="modal" data-target="#shortCodeDetails">
+              Verify shortcode details?
+            </a><br>
+          </span>
+
           <span style="color:#d9534f" ng-show="validationModel.shortcode===false">{{validationModel.shortcode_reason}}</span>
-          <table ng-show="validationModel.shortcode_metadata" class="table table-striped">
-            <thead>
-              <tr>
-                <th>
-                  Field
-                </th>
-                <th>
-                  Value
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="(key, value) in validationModel.shortcode_metadata">
-                <td>{{key}}</td>
-                <td>{{value}}</td>
-              </tr>
-            </tbody>
-          </table>
           <input type="text" ng-model="orderModel.shortcode" ng-blur="validateShortCode()" class="form-control" placeholder="Enter shortcode">
           <small id="shortcodeHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
         </div>
       </fieldset>
     </div>
     <!-- Contact Information -->
-    <div id="contact" ng-show="orderModel.url != null && orderModel.avail != null && orderModel.itar != null && orderModel.shortcode != null">
+    <div id="contact" ng-show="orderModel.env">
       <fieldset class="form-group">
         <legend>Contact Information</legend>
 
@@ -229,13 +171,18 @@
       </fieldset>
     </div>
     <!-- only seen when request is complete -->
-    <button class="btn btn-primary" ng-click="validateAndPreview()" ng-show="orderComplete">
-        Preview Request
+    <div ng-show="orderComplete">
+      <button class="btn btn-secondary" ng-click="resetOrder()">
+          Reset
       </button>
-    <span ng-if="failedValidationGlobal"> Oops. You may have skipped some settings, scroll up to see.</span>
+      <button class="btn btn-primary" ng-click="validateAndPreview()">
+          Preview Request
+      </button>
+      <span ng-if="failedValidationGlobal"> Oops. You may have skipped some settings, scroll up to see.</span>
+    </div>
   </div>
 </div>
-<!-- Modal -->
+<!-- Preview Modal -->
 <div class="modal fade" id="requestPreview" tabindex="-1" role="dialog" aria-labelledby="requestPreviewModalTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -260,18 +207,10 @@
           <tbody>
             <tr>
               <td>
-                Site type
-              </td>
-              <td>
-                {{orderModel.site}}
-              </td>
-            </tr>
-            <tr>
-              <td>
                 Environment
               </td>
               <td>
-                {{orderModel.env}}
+                {{orderModel.env | capitalize}}
               </td>
             </tr>
             <tr ng-show="orderModel.db">
@@ -279,7 +218,8 @@
                 Database
               </td>
               <td>
-                {{orderModel.db}}
+                <span ng-if="orderModel.db">Yes</span>
+                <span ng-if="!orderModel.db">No</span>
               </td>
             </tr>
             <tr>
@@ -287,7 +227,7 @@
                 URL requested
               </td>
               <td>
-                {{orderModel.url}}.web.umich.edu
+                https://{{orderModel.url}}.web.umich.edu
               </td>
             </tr>
             <tr>
@@ -295,15 +235,16 @@
                 High availability
               </td>
               <td>
-                {{orderModel.avail}}
+                <span ng-if="orderModel.avail">Yes</span>
+                <span ng-if="!orderModel.avail">No</span>
               </td>
             </tr>
-            <tr>
+            <tr ng-show="orderModel.shortcode">
               <td>
                 Shortcode
               </td>
               <td>
-                {{orderModel.avail}}
+                {{orderModel.shortcode}}
               </td>
             </tr>
             <tr>
@@ -311,7 +252,8 @@
                 Sensitive data
               </td>
               <td>
-                {{orderModel.avail}}
+                <span ng-if="orderModel.itar">Yes</span>
+                <span ng-if="!orderModel.itar">No</span>
               </td>
             </tr>
             <tr>
@@ -330,12 +272,12 @@
                 {{orderModel.mcomm}}
               </td>
             </tr>
-            <tr>
+            <tr ng-show="orderModel.free">
               <td>
                 Free
               </td>
               <td>
-                {{orderModel.free}}
+                For: {{orderModel.course}} - {{orderModel.term}}
               </td>
             </tr>
           </tbody>
@@ -344,6 +286,45 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary">Submit Request</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Shortcode Modal -->
+<div class="modal fade" id="shortCodeDetails" tabindex="-1" role="dialog" aria-labelledby="shortCodeDetailsTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shortCodeDetailsTitle">Shortcode Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <table ng-show="validationModel.shortcode_metadata" class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              Field
+            </th>
+            <th>
+              Value
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(key, value) in validationModel.shortcode_metadata">
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
 
     </div>
