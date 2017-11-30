@@ -149,7 +149,7 @@
 
         <div id="shortcode"  class="fadein fadeout" ng-hide="orderModel.free" style="margin-top:50px;" ng-class="failedValidation.shortcode ? 'has-danger' : 'class-if-false'">
           <label for="shortcode-input"><span class="required">* </span>Enter a shortcode if the site/app will not be for academic use.</label>
-          <span ng-show="validationModel.shortcode_metadata">
+          <span ng-show="validationModel.shortcode_metadata" tabindex="0" id="shortcodeValidationConfirm" class="focusTarget">
             Shortcode looked up.
             <a href="" data-toggle="modal" data-target="#shortCodeDetails">
               Verify shortcode details?
@@ -179,6 +179,7 @@
     <!-- only seen when request is complete -->
      <!--  -->
     <div ng-show="orderComplete">
+      <div class="alert alert-success" role="alert">Order complete. Preview or Reset</div>
       <button class="btn btn-secondary" ng-click="resetOrder()">
           Reset
       </button>
