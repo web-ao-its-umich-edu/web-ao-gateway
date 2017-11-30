@@ -14,8 +14,10 @@ webGateway.controller('supportController', ['$rootScope', '$scope', '$filter', '
   console.log('support');
 }]);
 
-webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$timeout', '$log', function($rootScope, $scope, $filter, $timeout, $log) {
+webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$timeout', '$log', 'focus', function($rootScope, $scope, $filter, $timeout, $log, focus) {
   //setting up some initial values
+  $scope.terms =['Fall', 'Winter','Spring', 'Summner', 'Spring-Summer']
+
   $scope.failedValidation = {};
   $scope.validationModel = {
     "url": null,
@@ -78,12 +80,21 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       if (/[^a-zA-Z0-9]/.test($scope.orderModel.url)) {
         $scope.validationModel.url = false;
         $scope.validationModel.url_reason = 'Only alphanumeric please.';
+        //pass the focus to the message
+        $scope.$evalAsync(function() {
+          focus('urlValidationMessage');
+        });
       } else {
         //is is taken? Right now this is bogus, in future we will
         // get this information by some http request from somewhere
         if ($scope.orderModel.url.includes('taken')) {
           $scope.validationModel.url = false;
           $scope.validationModel.url_reason = 'Prefix has already been taken.';
+          //pass the focus to the message
+          $scope.$evalAsync(function() {
+            focus('urlValidationMessage');
+          });
+
         } else {
           $scope.validationModel.url = true;
         }
@@ -128,6 +139,10 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
         $scope.validationModel.shortcode_metadata = null;
         $scope.validationModel.shortcode = false;
         $scope.validationModel.shortcode_reason = 'Only numeric please.';
+        $scope.$evalAsync(function() {
+          focus('shortcodeValidationMessage');
+        });
+
       } else {
         // TODO: in future we will use the shotcode to query the ESB, which
         // will return metadata about the shortcode or an error message
@@ -136,6 +151,9 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
         if ($scope.orderModel.shortcode.includes('0')) {
           $scope.validationModel.shortcode = false;
           $scope.validationModel.shortcode_reason = 'Shortcode does not exist.';
+          $scope.$evalAsync(function() {
+            focus('shortcodeValidationMessage');
+          });
         } else {
           // shortcode is real, servive returned metadata, display it
           $scope.validationModel.shortcode_metadata = {
@@ -154,7 +172,12 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       // input is blank
       $scope.validationModel.shortcode = false;
       $scope.validationModel.shortcode_reason = 'Please supply a shortcode.';
+
       $scope.validationModel.shortcode_metadata = null;
+      $scope.$evalAsync(function() {
+        focus('shortcodeValidationMessage');
+      });
+
     }
   };
 
@@ -193,7 +216,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       }
 
     }
-    
+
     // if $scope.failedValidation is an empty object
     // show modal with request preview
     if (angular.equals($scope.failedValidation, {})) {
@@ -202,9 +225,12 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       // set a global that will display the Oops message
       $scope.failedValidationGlobal = true;
     }
-
-
   };
+  $scope.passFocus = function (id){
+    $scope.$evalAsync(function() {
+      focus(id);
+    });
 
+  }
 
 }]);
