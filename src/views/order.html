@@ -1,7 +1,6 @@
 <div class="container-fluid" style="margin-top:80px">
   <div class="container">
     <a href="" style="position:fixed;right:0;top:60px;width:30px" ng-click="showDebug = !showDebug">&nbsp;</a>
-    <!-- <div> -->
     <div  ng-show="showDebug">
       orderModel
       <div class="alert alert-info">
@@ -17,57 +16,58 @@
         order complete: {{orderComplete}}
       </div>
     </div>
+
     <!--Application Environment Options-->
     <div id="app">
       <div id="env" ng-class="failedValidation.env ? 'has-danger' : 'class-if-false'">
         <fieldset class="form-group">
           <legend>Choose An Environment</legend>
-          <p>Choose an enviroment from the selection below. If all you need is a simple website you might want to take a look at <a href="https://sites.google.com">Google Sites.</a></p>
+          <p><span class="required">* </span>Choose an enviroment from the selection below. If all you need is a simple website you might want to take a look at <a href="https://sites.google.com">Google Sites.</a></p>
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input">
+                    <input name="env-radio" type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input" required>
                     Drupal
                 </label>
           </div>
 
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="python2" class="form-check-input">
+                    <input name="env-radio"  type="radio" ng-model="orderModel.env" value="python2" class="form-check-input">
                     Python 2.x
                   </label>
           </div>
 
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="python3" class="form-check-input">
+                    <input name="env-radio"  type="radio" ng-model="orderModel.env" value="python3" class="form-check-input">
                     Python 3.x
                   </label>
           </div>
 
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="ruby" class="form-check-input">
+                    <input name="env-radio"  type="radio" ng-model="orderModel.env" value="ruby" class="form-check-input">
                     Ruby
                   </label>
           </div>
 
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="java" class="form-check-input">
+                    <input name="env-radio"  type="radio" ng-model="orderModel.env" value="java" class="form-check-input">
                     Java
                   </label>
           </div>
 
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="nodejs" class="form-check-input">
+                    <input name="env-radio"  type="radio" ng-model="orderModel.env" value="nodejs" class="form-check-input">
                     NodeJS
                   </label>
           </div>
 
           <div class="form-check">
             <label class="form-check-label">
-                    <input type="radio" ng-model="orderModel.env" value="php" class="form-check-input">
+                    <input name="env-radio"  type="radio" ng-model="orderModel.env" value="php" class="form-check-input">
                     PHP
                   </label>
           </div>
@@ -85,19 +85,19 @@
     </div>
 
     <!--URL, Availibilty, Sensitive Data, free or not -->
-    <div ng-show="orderModel.env">
+    <div ng-show="orderModel.env" class="fadein fadeout">
       <fieldset class="form-group">
         <legend>Additional Information</legend>
         <div id="url" ng-class="failedValidation.url ? 'has-danger' : 'class-if-false'">
-          <label for="url-input">Choose a prefix for your site's address, letters and numbers only.</label>
+          <label for="url-input"><span class="required">* </span>Choose a prefix for your site's address, letters and numbers only.</label>
           <div style="color:#d9534f" ng-show="validationModel.url===false">{{validationModel.url_reason}}</div>
           <div class="form-inline" ng-class="validationModel.url===false ? 'has-danger' : 'class-if-false'">
-            <input type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter url">&nbsp; . &nbsp;
+            <input required type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter url">&nbsp; . &nbsp;
             <input type="text" disabled class="form-control" placeholder="web.umich.edu"> &nbsp;&nbsp;<span ng-show="orderModel.url"> https://{{orderModel.url}}.web.umich.edu </span>
           </div>
         </div>
 
-        <div id="avail" style="margin-top:30px;" ng-class="failedValidation.avail ? 'has-danger' : 'class-if-false'">
+        <div id="avail" style="margin-top:30px;">
           <div class="form-check">
             <p>Your environment can be set to scale with demand so that it will be highly available </p>
             <label class="form-check-label">
@@ -106,15 +106,18 @@
                 </label>
           </div>
         </div>
-
         <div id="itar" style="margin-top:30px;" ng-class="failedValidation.itar ? 'has-danger' : 'class-if-false'">
-          <label for="itar-input">Does your site contain sensitive data?</label>
-          <a href="https://www.safecomputing.umich.edu/dataguide/?q=home">Read more about the Umich Sensitive Data Guide</a>
-
-          <div class="form-check">
+          <p><span class="required">* </span>Does your site contain sensitive data? <a href="https://www.safecomputing.umich.edu/dataguide/?q=home">Read more about the Umich Sensitive Data Guide</a></p>
+          <div class="form-radio">
             <label class="form-check-label">
-                    <input type="checkbox" ng-model="orderModel.itar" class="form-check-input">
-                    Yes. My Site Will Host Sensitive Data
+                    <input required name="itar-radio" type="radio" ng-model="orderModel.itar" value="yes" class="form-radio-input">
+                    Yes. My Site will host sensitive data
+                </label>
+          </div>
+          <div class="form-radio">
+            <label class="form-check-label">
+                    <input name="itar-radio" type="radio" ng-model="orderModel.itar"  value="no" class="form-radio-input">
+                    No. My Site will not host sensitive data
                 </label>
           </div>
         </div>
@@ -126,22 +129,22 @@
             <div class="form-check">
               <label class="form-check-label">
                 <input type="checkbox" ng-model="orderModel.free" class="form-check-input">
-                  My site/application be used to support a registered University course
+                  My site/application will be used to support a registered University course
               </label>
             </div>
-            <div id="course" ng-show="orderModel.free" ng-class="failedValidation.course ? 'has-danger' : 'class-if-false'">
-              <label for="course">Course</label>
+            <div id="course" class="fadein fadeout" ng-show="orderModel.free" ng-class="failedValidation.course ? 'has-danger' : 'class-if-false'">
+              <label for="course"><span class="required">* </span>Course</label>
               <input type="text" id="course" ng-model="orderModel.course" class="form-control" placeholder="Enter course name" style="width:30%;">
             </div>
             <div id="term" ng-show="orderModel.free" ng-class="failedValidation.term ? 'has-danger' : 'class-if-false'">
-              <label for="term">Term</label>
+              <label for="term"><span class="required">* </span>Term</label>
               <input type="text" id="term" ng-init="false" ng-model="orderModel.term" class="form-control" placeholder="Enter term" style="width:30%;">
             </div>
           </fieldset>
         </div>
 
-        <div id="shortcode" ng-hide="orderModel.free" style="margin-top:50px;" ng-class="failedValidation.shortcode ? 'has-danger' : 'class-if-false'">
-          <label for="shortcode-input">Enter a shortcode if the site/app will not be for academic use.</label>
+        <div id="shortcode"  class="fadein fadeout" ng-hide="orderModel.free" style="margin-top:50px;" ng-class="failedValidation.shortcode ? 'has-danger' : 'class-if-false'">
+          <label for="shortcode-input"><span class="required">* </span>Enter a shortcode if the site/app will not be for academic use.</label>
           <span ng-show="validationModel.shortcode_metadata">
             Shortcode looked up.
             <a href="" data-toggle="modal" data-target="#shortCodeDetails">
@@ -161,16 +164,17 @@
         <legend>Contact Information</legend>
 
         <div id="uniq" ng-class="failedValidation.uniq ? 'has-danger' : 'class-if-false'">
-          <label for="uniq-input">Uniqname</label>
+          <label for="uniq-input"><span class="required">* </span>Uniqname</label>
           <input type="text" ng-model="orderModel.uniq" class="form-control" placeholder="Enter uniqname">
         </div>
         <div id="mcomm" style="margin-top:30px;" ng-class="failedValidation.mcomm ? 'has-danger' : 'class-if-false'">
-          <label for="mcomm-input">MCommunity Group</label>
+          <label for="mcomm-input"><span class="required">* </span>MCommunity Group</label>
           <input type="text" ng-model="orderModel.mcomm" class="form-control" placeholder="Enter MCommunity Group">
         </div>
       </fieldset>
     </div>
     <!-- only seen when request is complete -->
+     <!--  -->
     <div ng-show="orderComplete">
       <button class="btn btn-secondary" ng-click="resetOrder()">
           Reset
@@ -182,6 +186,7 @@
     </div>
   </div>
 </div>
+
 <!-- Preview Modal -->
 <div class="modal fade" id="requestPreview" tabindex="-1" role="dialog" aria-labelledby="requestPreviewModalTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -291,8 +296,6 @@
     </div>
   </div>
 </div>
-
-
 <!-- Shortcode Modal -->
 <div class="modal fade" id="shortCodeDetails" tabindex="-1" role="dialog" aria-labelledby="shortCodeDetailsTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">

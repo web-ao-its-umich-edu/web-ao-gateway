@@ -1,4 +1,4 @@
-var webGateway = angular.module( "webGateway", ['ngRoute'] );
+var webGateway = angular.module( "webGateway", ['ngRoute', 'ngAnimate'] );
 
 webGateway.run(function($rootScope) {
 });

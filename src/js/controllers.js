@@ -44,6 +44,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
        $scope.orderModel.env !== null &&
        $scope.orderModel.url !== null  &&
        $scope.orderModel.uniq !== null &&
+       $scope.orderModel.itar !== null &&
        $scope.orderModel.mcomm !== null &&
        (
          (
@@ -173,6 +174,10 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     if (!$scope.orderModel.mcomm) {
       $scope.failedValidation.mcomm = true;
     }
+    if ($scope.orderModel.itar === null) {
+      $scope.failedValidation.itar = true;
+    }
+
     // only bother to validate shortcode if the orderModel requires it
     if (!$scope.orderModel.free) {
       if (!$scope.orderModel.shortcode) {
@@ -188,8 +193,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       }
 
     }
-
-
+    
     // if $scope.failedValidation is an empty object
     // show modal with request preview
     if (angular.equals($scope.failedValidation, {})) {
