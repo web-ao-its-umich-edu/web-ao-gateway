@@ -191,21 +191,23 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
     if ($scope.orderModel.itar === null) {
       $scope.failedValidation.itar = true;
     }
+    if ($scope.orderModel.free ===null) {
+      $scope.failedValidation.free = true;
+    }
 
     // only bother to validate shortcode if the orderModel requires it
-    if (!$scope.orderModel.free) {
+    if ($scope.orderModel.free ==='no') {
       if (!$scope.orderModel.shortcode) {
         $scope.failedValidation.shortcode = true;
       }
     }
-    if ($scope.orderModel.free) {
+    if ($scope.orderModel.free ==='yes') {
       if (!$scope.orderModel.course) {
         $scope.failedValidation.course = true;
       }
       if (!$scope.orderModel.term) {
         $scope.failedValidation.term = true;
       }
-
     }
 
     // if $scope.failedValidation is an empty object
