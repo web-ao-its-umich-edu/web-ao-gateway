@@ -1,6 +1,7 @@
 <div class="container-fluid" style="margin-top:80px">
+  <div class="alert alert-success sr-only" role="alert">Switched to order view</div>
   <div class="container">
-    <a href="" style="position:fixed;right:0;top:60px;width:30px" ng-click="showDebug = !showDebug">&nbsp;</a>
+    <a class="secretCorner" aria-hidden="true" href="" ng-click="showDebug = !showDebug">&nbsp;</a>
     <div  ng-show="showDebug">
       orderModel
       <div class="alert alert-info">
@@ -22,7 +23,7 @@
       <div id="env" ng-class="failedValidation.env ? 'has-danger' : 'class-if-false'">
         <fieldset class="form-group">
           <legend>Choose An Environment</legend>
-          <p><span class="required">* </span>Choose an enviroment from the selection below. If all you need is a simple website you might want to take a look at <a href="https://sites.google.com">Google Sites.</a></p>
+          <p><span class="required">* </span>Choose an enviroment from the selection below. If all you need is a simple website you might want to take a look at <a target="_blank" href="https://sites.google.com">Google Sites. <span class="sr-only">(opens in new tab)</span></a></p>
           <div class="form-check">
             <label class="form-check-label">
                     <input name="env-radio" type="radio" ng-model="orderModel.env" value="drupal" class="form-check-input" required>
@@ -90,9 +91,9 @@
         <legend>Additional Information</legend>
         <div id="url" ng-class="failedValidation.url ? 'has-danger' : 'class-if-false'">
           <label for="url-input"><span class="required">* </span>Choose a prefix for your site's address, letters and numbers only.</label>
-          <div style="color:#d9534f" ng-show="validationModel.url===false">{{validationModel.url_reason}}</div>
+          <div id="urlValidationMessage" role="alert" tabindex="0" class="validationMessage" ng-show="validationModel.url===false">{{validationModel.url_reason}}</div>
           <div class="form-inline" ng-class="validationModel.url===false ? 'has-danger' : 'class-if-false'">
-            <input required type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter url">&nbsp; . &nbsp;
+            <input id="url-input" required type="text" ng-model="orderModel.url" ng-blur="validateUrl()" class="form-control" placeholder="Enter url">&nbsp; . &nbsp;
             <input type="text" disabled class="form-control" placeholder="web.umich.edu"> &nbsp;&nbsp;<span ng-show="orderModel.url"> https://{{orderModel.url}}.web.umich.edu </span>
           </div>
         </div>
@@ -107,7 +108,7 @@
           </div>
         </div>
         <div id="itar" style="margin-top:30px;" ng-class="failedValidation.itar ? 'has-danger' : 'class-if-false'">
-          <p><span class="required">* </span>Does your site contain sensitive data? <a href="https://www.safecomputing.umich.edu/dataguide/?q=home">Read more about the Umich Sensitive Data Guide</a></p>
+          <p><span class="required">* </span>Does your site contain sensitive data? <a target="_blank" href="https://www.safecomputing.umich.edu/dataguide/?q=home">Read more about the Umich Sensitive Data Guide <span class="sr-only"> (opens in new tab)</span></span></a></p>
           <div class="form-radio">
             <label class="form-check-label">
                     <input required name="itar-radio" type="radio" ng-model="orderModel.itar" value="yes" class="form-radio-input">
@@ -128,32 +129,34 @@
             <p>Web Platforms is free for use within official University of Michigan courses. Instances will be deleted six weeks after the end of the semester in which they are used.</p>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" ng-model="orderModel.free" class="form-check-input">
+                <input type="checkbox" ng-click="passFocus('course')" ng-model="orderModel.free" class="form-check-input">
                   My site/application will be used to support a registered University course
               </label>
             </div>
-            <div id="course" class="fadein fadeout" ng-show="orderModel.free" ng-class="failedValidation.course ? 'has-danger' : 'class-if-false'">
-              <label for="course"><span class="required">* </span>Course</label>
-              <input type="text" id="course" ng-model="orderModel.course" class="form-control" placeholder="Enter course name" style="width:30%;">
+            <div id="course" tabindex="0" class="fadein fadeout focusTarget" ng-show="orderModel.free" ng-class="failedValidation.course ? 'has-danger' : 'class-if-false'">
+              <label for="course-input"><span class="required">* </span>Course</label>
+              <input type="text" id="course-input" ng-model="orderModel.course" class="form-control" placeholder="Enter course name" style="width:30%;">
             </div>
             <div id="term" ng-show="orderModel.free" ng-class="failedValidation.term ? 'has-danger' : 'class-if-false'">
-              <label for="term"><span class="required">* </span>Term</label>
-              <input type="text" id="term" ng-init="false" ng-model="orderModel.term" class="form-control" placeholder="Enter term" style="width:30%;">
+              <label for="term-select"><span class="required">* </span>Term</label>
+              <select name="term-select" id="term-select" class="form-control" style="width:30%;"  ng-model="orderModel.term">
+                <option value="">--- Select term ---</option>
+                 <option ng-repeat="term in terms" value="{{term}}">{{term}}</option>
+              </select>
             </div>
           </fieldset>
         </div>
 
         <div id="shortcode"  class="fadein fadeout" ng-hide="orderModel.free" style="margin-top:50px;" ng-class="failedValidation.shortcode ? 'has-danger' : 'class-if-false'">
           <label for="shortcode-input"><span class="required">* </span>Enter a shortcode if the site/app will not be for academic use.</label>
-          <span ng-show="validationModel.shortcode_metadata">
+          <span ng-show="validationModel.shortcode_metadata" tabindex="0" id="shortcodeValidationConfirm" class="focusTarget">
             Shortcode looked up.
             <a href="" data-toggle="modal" data-target="#shortCodeDetails">
               Verify shortcode details?
             </a><br>
           </span>
-
-          <span style="color:#d9534f" ng-show="validationModel.shortcode===false">{{validationModel.shortcode_reason}}</span>
-          <input type="text" ng-model="orderModel.shortcode" ng-blur="validateShortCode()" class="form-control" placeholder="Enter shortcode">
+          <div id="shortcodeValidationMessage" role="alert" tabindex="0" class="validationMessage" ng-show="validationModel.shortcode===false">{{validationModel.shortcode_reason}}</div>
+          <input id="shortcode-input" type="text" ng-model="orderModel.shortcode" ng-blur="validateShortCode()" class="form-control" placeholder="Enter shortcode">
           <small id="shortcodeHelp" class="form-text text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing.</small>
         </div>
       </fieldset>
@@ -165,17 +168,18 @@
 
         <div id="uniq" ng-class="failedValidation.uniq ? 'has-danger' : 'class-if-false'">
           <label for="uniq-input"><span class="required">* </span>Uniqname</label>
-          <input type="text" ng-model="orderModel.uniq" class="form-control" placeholder="Enter uniqname">
+          <input id="uniq-input" type="text" ng-model="orderModel.uniq" class="form-control" placeholder="Enter uniqname">
         </div>
         <div id="mcomm" style="margin-top:30px;" ng-class="failedValidation.mcomm ? 'has-danger' : 'class-if-false'">
           <label for="mcomm-input"><span class="required">* </span>MCommunity Group</label>
-          <input type="text" ng-model="orderModel.mcomm" class="form-control" placeholder="Enter MCommunity Group">
+          <input id="mcomm-input" type="text" ng-model="orderModel.mcomm" class="form-control" placeholder="Enter MCommunity Group">
         </div>
       </fieldset>
     </div>
     <!-- only seen when request is complete -->
      <!--  -->
     <div ng-show="orderComplete">
+      <div class="alert alert-success" role="alert">Order complete. Preview or Reset</div>
       <button class="btn btn-secondary" ng-click="resetOrder()">
           Reset
       </button>
@@ -257,8 +261,7 @@
                 Sensitive data
               </td>
               <td>
-                <span ng-if="orderModel.itar">Yes</span>
-                <span ng-if="!orderModel.itar">No</span>
+                {{orderModel.itar | capitalize}}
               </td>
             </tr>
             <tr>

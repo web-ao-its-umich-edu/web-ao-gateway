@@ -1,5 +1,9 @@
-webGateway.filter('capitalize', function() {
-    return function(input) {
-      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-    }
+webGateway.factory('focus', function($timeout, $window) {
+  return function(id) {
+    $timeout(function() {
+      var element = $window.document.getElementById(id);
+      if(element)
+        element.focus();
+    });
+  };
 });
