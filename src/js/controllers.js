@@ -81,11 +81,8 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       if (/[^a-zA-Z0-9]/.test($scope.orderModel.url)) {
         $scope.validationModel.url = false;
         $scope.validationModel.url_reason = 'Only alphanumeric please.';
-        $scope.passFocus('urlValidationMessage');
         //pass the focus to the message
-        // $scope.$evalAsync(function() {
-        //   focus('urlValidationMessage');
-        // });
+        $scope.passFocus('urlValidationMessage');
       } else {
         //is is taken? Right now this is bogus, in future we will
         // get this information by some http request from somewhere
@@ -94,10 +91,6 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
           $scope.validationModel.url_reason = 'Prefix has already been taken.';
           //pass the focus to the message
           $scope.passFocus('urlValidationMessage');
-          // $scope.$evalAsync(function() {
-          //   focus('urlValidationMessage');
-          // });
-
         } else {
           $scope.validationModel.url = true;
         }
@@ -142,12 +135,9 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
         $scope.validationModel.shortcode_metadata = null;
         $scope.validationModel.shortcode = false;
         $scope.validationModel.shortcode_reason = 'Only numeric please.';
+        //pass focus to the message
         $scope.passFocus('shortcodeValidationMessage');
-        // $scope.$evalAsync(function() {
-        //   focus('shortcodeValidationMessage');
-        // });
-
-      } else {
+              } else {
         // TODO: in future we will use the shotcode to query the ESB, which
         // will return metadata about the shortcode or an error message
         // here we are mimicking the later condition by checking for a 0 in
@@ -155,10 +145,8 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
         if ($scope.orderModel.shortcode.includes('0')) {
           $scope.validationModel.shortcode = false;
           $scope.validationModel.shortcode_reason = 'Shortcode does not exist.';
+          //pass focus to message
           $scope.passFocus('shortcodeValidationMessage');
-          // $scope.$evalAsync(function() {
-          //   focus('shortcodeValidationMessage');
-          // });
         } else {
           // shortcode is real, servive returned metadata, display it
           $scope.validationModel.shortcode_metadata = {
@@ -180,10 +168,7 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       $scope.validationModel.shortcode_reason = 'Please supply a shortcode.';
 
       $scope.validationModel.shortcode_metadata = null;
-      $scope.$evalAsync(function() {
-        focus('shortcodeValidationMessage');
-      });
-
+      $scope.passFocus('shortcodeValidationMessage');
     }
   };
 
@@ -232,11 +217,11 @@ webGateway.controller('orderController', ['$rootScope', '$scope', '$filter', '$t
       $scope.failedValidationGlobal = true;
     }
   };
+
   $scope.passFocus = function (id){
     $scope.$evalAsync(function() {
       focus(id);
     });
-
-  }
+  };
 
 }]);

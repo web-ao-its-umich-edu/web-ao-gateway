@@ -261,8 +261,7 @@
                 Sensitive data
               </td>
               <td>
-                <span ng-if="orderModel.itar">Yes</span>
-                <span ng-if="!orderModel.itar">No</span>
+                {{orderModel.itar | capitalize}}
               </td>
             </tr>
             <tr>
